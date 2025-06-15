@@ -3,7 +3,7 @@ import './App.css'
 
 function MovieCard({movie}) {
   return (
-  <div className="movie-card">
+  <div className="movie-card ">
     <img src={movie.Poster !== "N/A" ? movie.Poster : "https://via.placeholder.com/150"} alt={movie.Title} />
     <div className="movie-info">
       <h3>{movie.Title}</h3>
@@ -31,6 +31,7 @@ function App() {
     fetch(url).then(response => response.json())
     .then((data) => {
       setMovies(data.Search);
+      console.log(data.Search);
     })
   }
 
@@ -38,12 +39,12 @@ function App() {
   return (
     <>
       <input type="text" value={searchInput} onChange={search}/>
-      <button onClick={searchClick}> Search </button>
+      <button className="btn btn-primary" onClick={searchClick}> Search </button>
       { movies.length > 0 &&
-        <div className="cards">
+        <div className="row g-4">
           { movies.map((movie, i) => {
             return (
-              <div key={i}>
+              <div key={i} className="col-12 col-sm-6 col-md-3">
                 <MovieCard movie={movie} />
               </div>
             )
