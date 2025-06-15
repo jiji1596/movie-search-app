@@ -37,9 +37,13 @@ function App() {
 
 
   return (
-    <>
-      <input type="text" value={searchInput} onChange={search}/>
-      <button className="btn btn-primary" onClick={searchClick}> Search </button>
+    <div className="w-100">
+      <h1 className="mb-4 text-primary">Movie Picker</h1>
+      <div className="d-flex gap-2 container justify-content-center mb-5">
+        <input className="form-control" style={{ width: '400px' }} type="text" value={searchInput} onChange={search}/>
+        <button className="btn btn-primary" onClick={searchClick}> Search </button>
+      </div>
+      <div>
       { movies.length > 0 &&
         <div className="row g-4">
           { movies.map((movie, i) => {
@@ -51,7 +55,8 @@ function App() {
           })}
         </div>
       }
-    </>
+      </div>
+    </ div>
   )
 }
 
