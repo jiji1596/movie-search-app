@@ -53,6 +53,8 @@ function App() {
         <input className="form-control" style={{ width: '400px' }} type="text" value={searchInput} onChange={search}/>
         <button className="btn btn-primary" onClick={searchClick}> Search </button>
       </div>
+      {loading && <p className="text-secondary">Loading...</p>}
+      {error && <p className="text-danger">{error}</p>}
       <div>
       { movies.length > 0 &&
         <div className="row g-4">
