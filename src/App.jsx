@@ -8,7 +8,6 @@ function MovieCard({movie}) {
     <div className="movie-info">
       <h3>{movie.Title}</h3>
       <p>{movie.Year}</p>
-      <p className="movie-type">{movie.Type}</p>
     </div>
   </div>
   )
@@ -19,20 +18,31 @@ function App() {
   const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   function search(event) {
     setSearchInput(event.currentTarget.value);
   }
 
   function searchClick() {
+    setLoading(true);
+    setError(null);
     const url = `http://www.omdbapi.com/?apikey=b74f1343&s=${searchInput}`
 
-    setSearchQuery(searchInput);
-    fetch(url).then(response => response.json())
-    .then((data) => {
-      setMovies(data.Search);
-      console.log(data.Search);
-    })
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        if (data.Response === "True") {
+          setMovies(data.Search);
+        } else {
+          setMovies([]);
+          setError(data.Error);
+        }
+      })
+      .catch(err => setError("Something went wrong."))
+      .finally(() => setLoading(false));
   }
 
 
@@ -48,7 +58,7 @@ function App() {
         <div className="row g-4">
           { movies.map((movie, i) => {
             return (
-              <div key={i} className="col-12 col-sm-6 col-md-3">
+              <div key={i} className="col-12 col-sm-6 col-md-3 text-light">
                 <MovieCard movie={movie} />
               </div>
             )
